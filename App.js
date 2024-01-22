@@ -1,20 +1,54 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./components/Home/Screen";
+import TaskFormScreen from "./components/Home/Form";
+import AddTaskButton from "./components/Tasks/AddTask";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 
-export default function App() {
+const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator()
+
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="HomeScreen">
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{
+            title: "Sublime Todo App",
+            headerTitleAlign: "center",
+            headerStyle: {
+              backgroundColor: "#131054",
+            },
+            // headerRight: () => <AddTaskButton />,
+            headerTitleStyle: {
+              color: "#ffffff",
+            },
+          }}
+        />
+        <Stack.Screen
+          name="TaskFormScreen"
+          component={TaskFormScreen}
+          options={{
+            title: "Nueva tarea",
+            headerStyle: {
+              backgroundColor: "#131054",
+            },
+            headerTintColor: "#fff",
+            headerTitleStyle: {
+              color: "#ffffff",
+            },
+          }}
+        />
+      
+      </Stack.Navigator>
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+      <AddTaskButton />
+
+    </NavigationContainer>
+  );
+};
+
+export default App;
